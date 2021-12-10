@@ -38,7 +38,7 @@ public class LoginController{
         String password = this.password.getText();
         try {
             ConnectionClass connectionClass = new ConnectionClass();
-            String sql = "SELECT * FROM users WHERE email = ? and password = ?";
+            String sql = "SELECT * FROM officials WHERE email = ? and password = ?";
             PreparedStatement statement = connectionClass.getConnection().prepareStatement(sql);
 
 
