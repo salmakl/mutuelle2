@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Dao {
+public class ConnectionClass {
 
     static Connection connection=null;
     static String url="jdbc:mysql://localhost:3306/";
@@ -13,7 +13,7 @@ public class Dao {
     static String userName="root";
     static String password="2420";
 
-    Connection getConnection() {
+    public Connection getConnection() {
 
         Connection connection = null;
         try {

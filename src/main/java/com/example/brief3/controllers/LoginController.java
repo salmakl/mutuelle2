@@ -1,5 +1,6 @@
 package com.example.brief3.controllers;
 
+import com.example.brief3.DAO.ConnectionClass;
 import com.example.brief3.LoginApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.scene.control.*;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 
 
 import org.json.simple.JSONArray;
@@ -32,30 +34,26 @@ public class LoginController{
     public void checkLogin() throws IOException {
 
         LoginApplication main = new LoginApplication();
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("C:\\Users\\admin\\Desktop\\Brief3\\src\\main\\resources\\com\\example\\brief3\\json\\fanctionnaire.json")) {
-            //Read JSON file
-            Object obj = parser.parse(reader);
+        String email = this.email.getText();
+        String password = this.password.getText();
+        try {
+            ConnectionClass connectionClass = new ConnectionClass();
+            String sql = "SELECT * FROM users WHERE email = ? and password = ?";
+            PreparedStatement statement = connectionClass.getConnection().prepareStatement(sql);
 
-            JSONArray funList = (JSONArray) obj;
-            //System.out.println(funList);
 
-            for(int i = 0; i < funList.size(); i++) {
-                JSONObject fonctionnaire = (JSONObject) funList.get(i);
-                String email = (String) fonctionnaire.get("email");
-                String password = (String) fonctionnaire.get("password");
 
-                if((this.email.getText().isEmpty() || this.password.getText().isEmpty())){
-                    wrong.setText("Please enter your email and password");
-                    break;
-                } else if (email.equals(this.email.getText()) && password.equals(this.password.getText())){
-                    wrong.setText("Success!");
-                    main.chaneScene("dashboard.fxml");
-                    break;
-                } else {
-                    wrong.setText("Wrong email or password");
-                }
+            statement.setString(1, email);
+            statement.setString(2, password);
+            statement.execute();
+            if (statement.getResultSet().next()) {
+                main.chaneScene("dashboard.fxml");
             }
+            else {
+                wrong.setText("Wrong email or password");
+            }
+
+
         }catch (Exception e) {
             e.printStackTrace();
         }

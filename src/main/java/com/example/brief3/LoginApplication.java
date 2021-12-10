@@ -18,7 +18,7 @@ public class LoginApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(LoginApplication.class.getResource("login-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Login");
+        stage.setTitle("Mutuelle");
         stage.setScene(scene);
         stage.show();
     }
