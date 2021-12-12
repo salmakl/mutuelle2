@@ -2,6 +2,7 @@ package com.example.brief3.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ConnectionClass {
@@ -15,10 +16,10 @@ public class ConnectionClass {
 
     public Connection getConnection() {
 
-        Connection connection = null;
+
         try {
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(driver);
             connection = (Connection) DriverManager.getConnection(url + dbName, userName, password);
             System.out.println("Connection established succesfully!");
             return connection;
@@ -31,6 +32,8 @@ public class ConnectionClass {
 
 
     }
+
+
 
 
 }

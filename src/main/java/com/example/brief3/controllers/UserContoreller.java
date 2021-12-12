@@ -1,5 +1,8 @@
 package com.example.brief3.controllers;
 
+import com.example.brief3.DAO.Client;
+import com.example.brief3.DAO.ConnectionClass;
+import com.example.brief3.models.Clients;
 import com.example.brief3.models.Users;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -103,6 +106,7 @@ public class UserContoreller implements Initializable {
     private ToggleGroup identifiant;
 
     ObservableList<Users> list = FXCollections.observableArrayList();
+    ObservableList<Clients> listC = FXCollections.observableArrayList();
 
     public void save() {
 
@@ -209,39 +213,28 @@ public class UserContoreller implements Initializable {
     }
 
 
+    public ObservableList<Users> getAll() {
+        Client client = new Client();
+        return client.getClients();
+
+    }
+
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        comp.setCellValueFactory(new PropertyValueFactory<Users, String>("company"));
+
         cId.setCellValueFactory(new PropertyValueFactory<Users, String>("id"));
-        cPhone.setCellValueFactory(new PropertyValueFactory<Users, String>("phone"));
+        comp.setCellValueFactory(new PropertyValueFactory<Users, String>("company"));
+        cPhone.setCellValueFactory(new PropertyValueFactory<Users, String>("email"));
         cLname.setCellValueFactory(new PropertyValueFactory<Users, String>("lname"));
         cFname.setCellValueFactory(new PropertyValueFactory<Users, String>("fname"));
-        cAdress.setCellValueFactory(new PropertyValueFactory<Users, String>("adress"));
-        cmail.setCellValueFactory(new PropertyValueFactory<Users, String>("mail"));
+        cAdress.setCellValueFactory(new PropertyValueFactory<Users, String>("address"));
+        cmail.setCellValueFactory(new PropertyValueFactory<Users, String>("phone"));
         cDate.setCellValueFactory(new PropertyValueFactory<Users, Date>("date"));
 
-        table.setItems(list);
-
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("C:\\Users\\admin\\Desktop\\Brief3\\src\\main\\resources\\com\\example\\brief3\\json\\ref.json")){
-            //Read JSON file
-            Object obj = parser.parse(reader);
-
-            JSONArray list = (JSONArray) obj;
-
-            for (Object o : list) {
-                JSONObject country_obj = (JSONObject) o;
-                String country_code = (String) country_obj.get("dial_code");
-
-                country.getItems().add(country_code);
-            }
-
-
-    }catch (Exception e){
-            e.printStackTrace();
-        }
+        table.setItems(getAll());
     }
 }

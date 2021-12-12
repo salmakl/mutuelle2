@@ -1,20 +1,13 @@
 package com.example.brief3.controllers;
 
 import com.example.brief3.DAO.ConnectionClass;
-import com.example.brief3.LoginApplication;
-import javafx.event.ActionEvent;
+import com.example.brief3.DAO.Users;
+import com.example.brief3.Mutuelle;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.PreparedStatement;
-
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 
 public class LoginController{
@@ -33,20 +26,24 @@ public class LoginController{
 
     public void checkLogin() throws IOException {
 
-        LoginApplication main = new LoginApplication();
+        Mutuelle main = new Mutuelle();
         String email = this.email.getText();
         String password = this.password.getText();
         try {
+
             ConnectionClass connectionClass = new ConnectionClass();
-            String sql = "SELECT * FROM officials WHERE email = ? and password = ?";
-            PreparedStatement statement = connectionClass.getConnection().prepareStatement(sql);
+            connectionClass.getConnection();
+
+            Users users = new Users();
 
 
 
-            statement.setString(1, email);
-            statement.setString(2, password);
-            statement.execute();
-            if (statement.getResultSet().next()) {
+
+
+            if (email.isEmpty() || password.isEmpty()) {
+                wrong.setText("Please fill in all fields");
+            }
+            else if (users.Login(email, password)) {
                 main.chaneScene("dashboard.fxml");
             }
             else {

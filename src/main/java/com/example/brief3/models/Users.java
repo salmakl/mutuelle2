@@ -13,6 +13,7 @@ public class Users {
     private String id;
     private String company;
 
+
     public Users(String fname, String lname, String mail, String adress, LocalDate date, String phone, String id, String company) {
         this.fname = fname;
         this.lname = lname;
