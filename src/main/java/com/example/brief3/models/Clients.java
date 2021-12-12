@@ -1,6 +1,7 @@
 package com.example.brief3.models;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 public class Clients {
     private int id;
@@ -16,12 +17,11 @@ public class Clients {
     private Date date;
     private String company;
 
-    public Clients() {
-    }
 
 
 
-    public Clients(int id, String badge, String fname, String lname, String phone,String email, String address, Date date, String company_name) {
+
+    public Clients(int id, String badge, String fname, String lname, String phone, String email, String address, Date date, String company_name) {
         this.id = id;
         this.badge = badge;
         this.fname = fname;
@@ -32,6 +32,12 @@ public class Clients {
         this.date = date;
         this.company = company_name;
     }
+
+    public Clients() {
+
+    }
+
+
 
 /*    public Clients(int id, String badge, String fname, String lname, String cin, String passport, String phone, String email, String address, Date created_at, Date date, String company) {
         this.id = id;
@@ -143,6 +149,8 @@ public class Clients {
     public void setCompany(String company) {
         this.company = company;
     }
+
+
 }
 
 

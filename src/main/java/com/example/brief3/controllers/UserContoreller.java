@@ -1,7 +1,6 @@
 package com.example.brief3.controllers;
 
 import com.example.brief3.DAO.Client;
-import com.example.brief3.DAO.ConnectionClass;
 import com.example.brief3.models.Clients;
 import com.example.brief3.models.Users;
 import javafx.collections.FXCollections;
@@ -21,8 +20,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserContoreller implements Initializable {
-
-    List<Users> users = new ArrayList<>();
 
 
     @FXML
@@ -106,7 +103,7 @@ public class UserContoreller implements Initializable {
     private ToggleGroup identifiant;
 
     ObservableList<Users> list = FXCollections.observableArrayList();
-    ObservableList<Clients> listC = FXCollections.observableArrayList();
+
 
     public void save() {
 
@@ -131,13 +128,15 @@ public class UserContoreller implements Initializable {
 
         boolean error = false;
 
-        Users user = new Users();
+        Clients client = new Clients();
+        Client client1 = new Client();
+
         if (this.company.getLength() > 50 || this.company.getText().isEmpty()) {
             this.eCompany.setText("Should not be empty should be less than 50 character");
             error = true;
         } else {
             this.eCompany.setText("");
-            user.setCompany(this.company.getText());
+            client.setCompany(this.company.getText());
         }
 
         if (this.fname.getLength() > 50 || this.fname.getText().isEmpty()) {
@@ -145,23 +144,23 @@ public class UserContoreller implements Initializable {
             error = true;
         } else {
             this.eFname.setText("");
-            user.setFname(this.fname.getText());
+            client.setFname(this.fname.getText());
         }
 
         if (this.lname.getLength() > 50 || this.lname.getText().isEmpty()) {
-            this.eLname.setText("*should not be empty should be less than 50 character");
+            this.eLname.setText("Should not be empty should be less than 50 character");
             error = true;
         } else {
             this.eLname.setText("");
-            user.setLname(this.lname.getText());
+            client.setLname(this.lname.getText());
         }
 
         if (this.phone.getText().isEmpty() || this.phone.getLength() < 9 || !mp.matches()) {
-            this.ePhone.setText("*should not be empty should be less than 9 character and only containe numbers");
+            this.ePhone.setText("Should not be empty should be less than 9 character and only containe numbers");
             error = true;
         } else {
             this.ePhone.setText("");
-            user.setPhone(this.country.getSelectionModel().getSelectedItem() + "" + this.phone.getText());
+            client.setPhone(this.country.getSelectionModel().getSelectedItem() + "" + this.phone.getText());
         }
 
         if (this.mail.getText().isEmpty() || !me.matches()) {
@@ -169,15 +168,15 @@ public class UserContoreller implements Initializable {
             error = true;
         } else {
             this.eEmail.setText("");
-            user.setEmail(this.mail.getText());
+            client.setEmail(this.mail.getText());
         }
 
         if (Objects.equals(toogleGroupValue, "CIN")) {
             if (this.id.getText().isEmpty() || !mc.matches()) {
-                this.eID.setText("*should contain two alphabets and 6 digit");
+                this.eID.setText("Should contain two alphabets and 6 digit");
                 error = true;
             } else {
-                user.setId("CIN: " + this.id.getText());
+                client.setId(this.id.getText());
                 this.eID.setText("");
             }
         } else if (Objects.equals(toogleGroupValue, "Passport")) {
@@ -185,7 +184,7 @@ public class UserContoreller implements Initializable {
                 this.eID.setText("Should contain 2 alphabets and 7 digit");
                 error = true;
             } else {
-                user.setId("Passport: " + this.id.getText());
+                client.setId(this.id.getText());
                 this.eID.setText("");
             }
         }
@@ -195,7 +194,7 @@ public class UserContoreller implements Initializable {
             error = true;
         } else {
             this.eAddress.setText("");
-            user.setAdress(this.adress.getText());
+            client.setAddress(this.adress.getText());
         }
 
         if (this.date.getValue() == null) {
@@ -203,16 +202,33 @@ public class UserContoreller implements Initializable {
             error = true;
         } else {
             this.eDate.setText("");
-            user.setDate(this.date.getValue());
+            client.setDate(java.sql.Date.valueOf(this.date.getValue()));
         }
 
         if (!error) {
-            list.add(user);
+            client1.save(client);
+
         }
 
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("C:\\Users\\admin\\Desktop\\Brief3\\src\\main\\resources\\com\\example\\brief3\\json\\ref.json")) {
+            //Read JSON file
+            Object obj = parser.parse(reader);
+
+            JSONArray list = (JSONArray) obj;
+
+            for (Object o : list) {
+                JSONObject country_obj = (JSONObject) o;
+                String country_code = (String) country_obj.get("dial_code");
+
+                country.getItems().add(country_code);
+            }
+
+        }catch(Exception e1) {
+        e1.printStackTrace();
     }
 
-
+}
     public ObservableList<Users> getAll() {
         Client client = new Client();
         return client.getClients();

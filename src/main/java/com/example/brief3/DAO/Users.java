@@ -6,8 +6,7 @@ import java.sql.SQLException;
 
 
 public class Users {
-    private String email;
-    private String password;
+
 
     public boolean Login(String email, String password) {
         ConnectionClass connectionClass = new ConnectionClass();
@@ -27,4 +26,6 @@ public class Users {
             return false;
         }
     }
+
+
 }
