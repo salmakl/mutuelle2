@@ -32,7 +32,7 @@
                                     <TextField fx:id="fname" layoutX="71.0" layoutY="82.0" prefHeight="28.0" prefWidth="167.0" promptText="First name" />
                                     <TextField fx:id="company" layoutX="71.0" layoutY="162.0" prefHeight="28.0" prefWidth="167.0" promptText="Company name" />
                                     <TextField fx:id="lname" layoutX="346.0" layoutY="82.0" prefHeight="28.0" prefWidth="167.0" promptText="Last name" />
-                                    <TextField fx:id="id" layoutX="68.0" layoutY="250.0" prefHeight="28.0" prefWidth="173.0" />
+                                    <TextField fx:id="idC" layoutX="68.0" layoutY="250.0" prefHeight="28.0" prefWidth="173.0" />
                                     <DatePicker fx:id="date" layoutX="342.0" layoutY="164.0" promptText="Start date" />
                                     <RadioButton fx:id="cin" layoutX="71.0" layoutY="218.0" mnemonicParsing="false" selected="true" text="CIN">
                                        <toggleGroup>

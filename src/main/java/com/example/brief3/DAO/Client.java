@@ -45,17 +45,21 @@ public class Client {
 
     public void save(Clients client) {
         ConnectionClass connection = new ConnectionClass();
-        String query = "INSERT INTO client (work_badge, firstname, lastname, email, phone, addresse, hire_date, company_name) VALUES (?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO client (work_badge, company_name, hire_date, firstname, lastname, cin, passport, phone, email, addresse) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, client.getBadge());
-            preparedStatement.setString(2, client.getFname());
-            preparedStatement.setString(3, client.getLname());
-            preparedStatement.setString(4, client.getEmail());
-            preparedStatement.setString(5, client.getPhone());
-            preparedStatement.setString(6, client.getAddress());
-            preparedStatement.setDate(7, Date.valueOf(client.getDate().toString()));
-            preparedStatement.setString(8, client.getCompany());
+            preparedStatement.setString(2, client.getCompany());
+            preparedStatement.setDate(3, Date.valueOf(client.getDate().toString()));
+            preparedStatement.setString(4, client.getFname());
+            preparedStatement.setString(5, client.getLname());
+            preparedStatement.setString(6, client.getCin());
+            preparedStatement.setString(7, client.getPassport());
+            preparedStatement.setString(8, client.getPhone());
+            preparedStatement.setString(9, client.getEmail());
+            preparedStatement.setString(10, client.getAddress());
+
+
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {

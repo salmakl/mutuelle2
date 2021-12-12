@@ -37,7 +37,7 @@ public class UserContoreller implements Initializable {
     @FXML
     private DatePicker date;
     @FXML
-    private TextField id;
+    private TextField idC;
 
     @FXML
     private TableView<Users> table;
@@ -102,8 +102,8 @@ public class UserContoreller implements Initializable {
     @FXML
     private ToggleGroup identifiant;
 
-    ObservableList<Users> list = FXCollections.observableArrayList();
-
+    @FXML
+    private Button add;
 
     public void save() {
 
@@ -120,8 +120,8 @@ public class UserContoreller implements Initializable {
 
         Matcher mp = p.matcher(this.phone.getText());
         Matcher me = e.matcher(this.mail.getText());
-        Matcher mc = c.matcher(this.id.getText());
-        Matcher mps = ps.matcher(this.id.getText());
+        Matcher mc = c.matcher(this.idC.getText());
+        Matcher mps = ps.matcher(this.idC.getText());
 
         RadioButton selectedRadioButton = (RadioButton) identifiant.getSelectedToggle();
         String toogleGroupValue = selectedRadioButton.getText();
@@ -171,20 +171,22 @@ public class UserContoreller implements Initializable {
             client.setEmail(this.mail.getText());
         }
 
-        if (Objects.equals(toogleGroupValue, "CIN")) {
-            if (this.id.getText().isEmpty() || !mc.matches()) {
+        if (cin.isSelected()) {
+            if (this.idC.getText().isEmpty() || !mc.matches()) {
                 this.eID.setText("Should contain two alphabets and 6 digit");
                 error = true;
             } else {
-                client.setId(this.id.getText());
+                client.setCin(this.idC.getText());
+                client.setPassport(null);
                 this.eID.setText("");
             }
-        } else if (Objects.equals(toogleGroupValue, "Passport")) {
-            if (this.id.getText().isEmpty() || !mps.matches()) {
+        } else if (passport.isSelected()) {
+            if (this.idC.getText().isEmpty() || !mps.matches()) {
                 this.eID.setText("Should contain 2 alphabets and 7 digit");
                 error = true;
             } else {
-                client.setId(this.id.getText());
+                client.setCin(null);
+                client.setPassport(this.idC.getText());
                 this.eID.setText("");
             }
         }
