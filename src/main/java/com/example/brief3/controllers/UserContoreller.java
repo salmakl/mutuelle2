@@ -3,7 +3,6 @@ package com.example.brief3.controllers;
 import com.example.brief3.DAO.Client;
 import com.example.brief3.models.Clients;
 import com.example.brief3.models.Users;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,7 +39,7 @@ public class UserContoreller implements Initializable {
     private TextField idC;
 
     @FXML
-    private TableView<Users> table;
+    private TableView<Clients> table;
 
 
     @FXML
@@ -70,28 +69,28 @@ public class UserContoreller implements Initializable {
     @FXML
     private ChoiceBox<String> country = new ChoiceBox<String>();
     @FXML
-    private TableColumn<Users, String> cAdress;
+    private TableColumn<Clients, String> cAdress;
 
     @FXML
-    private TableColumn<Users, Date> cDate;
+    private TableColumn<Clients, Date> cDate;
 
     @FXML
-    private TableColumn<Users, String> cId;
+    private TableColumn<Clients, String> cId;
 
     @FXML
-    private TableColumn<Users, String> cLname;
+    private TableColumn<Clients, String> cLname;
 
     @FXML
-    private TableColumn<Users, String> cFname;
+    private TableColumn<Clients, String> cFname;
 
     @FXML
-    private TableColumn<Users, String> cPhone;
+    private TableColumn<Clients, String> cPhone;
 
     @FXML
-    private TableColumn<Users, String> cmail;
+    private TableColumn<Clients, String> cmail;
 
     @FXML
-    private TableColumn<Users, String> comp;
+    private TableColumn<Clients, String> comp;
 
     @FXML
     private RadioButton passport;
@@ -103,7 +102,16 @@ public class UserContoreller implements Initializable {
     private ToggleGroup identifiant;
 
     @FXML
-    private Button add;
+    private TextField search;
+
+    @FXML
+    private Button searchBtn;
+
+    @FXML
+    private ComboBox<String> companyF;
+
+
+
 
     public void save() {
 
@@ -231,7 +239,9 @@ public class UserContoreller implements Initializable {
     }
 
 }
-    public ObservableList<Users> getAll() {
+
+
+    public ObservableList<Clients> getAll() {
         Client client = new Client();
         return client.getClients();
 
@@ -239,20 +249,34 @@ public class UserContoreller implements Initializable {
 
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Client client = new Client();
+        companyF.setItems(client.getCompany());
 
-
-        cId.setCellValueFactory(new PropertyValueFactory<Users, String>("id"));
-        comp.setCellValueFactory(new PropertyValueFactory<Users, String>("company"));
-        cPhone.setCellValueFactory(new PropertyValueFactory<Users, String>("email"));
-        cLname.setCellValueFactory(new PropertyValueFactory<Users, String>("lname"));
-        cFname.setCellValueFactory(new PropertyValueFactory<Users, String>("fname"));
-        cAdress.setCellValueFactory(new PropertyValueFactory<Users, String>("address"));
-        cmail.setCellValueFactory(new PropertyValueFactory<Users, String>("phone"));
-        cDate.setCellValueFactory(new PropertyValueFactory<Users, Date>("date"));
+        cId.setCellValueFactory(new PropertyValueFactory<Clients, String>("id"));
+        comp.setCellValueFactory(new PropertyValueFactory<Clients, String>("company"));
+        cPhone.setCellValueFactory(new PropertyValueFactory<Clients, String>("email"));
+        cLname.setCellValueFactory(new PropertyValueFactory<Clients, String>("lname"));
+        cFname.setCellValueFactory(new PropertyValueFactory<Clients, String>("fname"));
+        cAdress.setCellValueFactory(new PropertyValueFactory<Clients, String>("address"));
+        cmail.setCellValueFactory(new PropertyValueFactory<Clients, String>("phone"));
+        cDate.setCellValueFactory(new PropertyValueFactory<Clients, Date>("date"));
 
         table.setItems(getAll());
     }
+
+    public void search(){
+        Client client = new Client();
+        table.getItems().clear();
+        table.setItems(client.search(search.getText()));
+
+    }
+    public void searchByCompany(){
+        Client client = new Client();
+        table.getItems().clear();
+        table.setItems(client.getClientsByCompany(companyF.getValue()));
+
+    }
+
 }

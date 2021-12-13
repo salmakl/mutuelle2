@@ -29,7 +29,7 @@ public class Client {
                         resultSet.getString("lastname"),
                         resultSet.getString("email"),
                         resultSet.getString("phone"),
-                        resultSet.getString("addresse"),
+                        resultSet.getString("address"),
                         resultSet.getDate("hire_date"),
                         resultSet.getString("company_name")
                 ));
@@ -45,7 +45,7 @@ public class Client {
 
     public void save(Clients client) {
         ConnectionClass connection = new ConnectionClass();
-        String query = "INSERT INTO client (work_badge, company_name, hire_date, firstname, lastname, cin, passport, phone, email, addresse) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO client (work_badge, company_name, hire_date, firstname, lastname, cin, passport, phone, email, address) VALUES (?,?,?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
             preparedStatement.setString(1, client.getBadge());
@@ -66,4 +66,82 @@ public class Client {
             e.printStackTrace();
         }
     }
+
+    //search client
+
+    public ObservableList<Clients> search(String search) {
+        ConnectionClass connection = new ConnectionClass();
+        ObservableList<Clients> client = FXCollections.observableArrayList();
+        try {
+            String query = "SELECT * FROM client WHERE cin LIKE'%" + search+ "%' OR firstname LIKE '%" + search + "%' OR lastname LIKE '%" + search + "%' OR email LIKE '%" + search + "%'";
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                client.add(new Clients(
+                        resultSet.getInt("client_id"),
+                        resultSet.getString("work_badge"),
+                        resultSet.getString("firstname"),
+                        resultSet.getString("lastname"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("address"),
+                        resultSet.getDate("hire_date"),
+                        resultSet.getString("company_name")
+                ));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return client;
+    }
+    //get company name
+
+    public ObservableList<String> getCompany() {
+        ConnectionClass connection = new ConnectionClass();
+        ObservableList<String> company = FXCollections.observableArrayList();
+        try {
+            String query = "SELECT company_name FROM client";
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                company.add(resultSet.getString("company_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return company;
+    }
+
+    //get clients by company
+
+    public ObservableList<Clients> getClientsByCompany(String company) {
+        ConnectionClass connection = new ConnectionClass();
+        ObservableList<Clients> clients = FXCollections.observableArrayList();
+        try {
+            String query = "SELECT * FROM client WHERE company_name = ?";
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
+            preparedStatement.setString(1, company);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                clients.add(new Clients(
+                        resultSet.getInt("client_id"),
+                        resultSet.getString("work_badge"),
+                        resultSet.getString("firstname"),
+                        resultSet.getString("lastname"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("address"),
+                        resultSet.getDate("hire_date"),
+                        resultSet.getString("company_name")
+                ));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clients;
+    }
 }
+
+
