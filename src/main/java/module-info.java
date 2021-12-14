@@ -4,6 +4,7 @@ module com.example.brief3 {
     requires json.simple;
     requires java.sql;
     requires mysql.connector.java;
+    requires org.junit.jupiter.api;
 
 
     opens com.example.brief3 to javafx.fxml,javafx.base;

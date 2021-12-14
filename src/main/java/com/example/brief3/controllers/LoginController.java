@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
+
 
 
 public class LoginController{
@@ -35,9 +35,6 @@ public class LoginController{
             connectionClass.getConnection();
 
             Users users = new Users();
-
-
-
 
 
             if (email.isEmpty() || password.isEmpty()) {

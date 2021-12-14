@@ -248,7 +248,6 @@ public class UserContoreller implements Initializable {
     }
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Client client = new Client();
