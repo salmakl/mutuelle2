@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.HashMap;
 
 
 public class Client {
@@ -142,6 +142,27 @@ public class Client {
         }
         return clients;
     }
-}
+    //draw chart
+
+    public HashMap<String,Integer> statistic (){
+        ConnectionClass connection = new ConnectionClass();
+        HashMap<String,Integer> chart= new HashMap<>();
+        try {
+            String query = "SELECT date(created_at) as creation, COUNT(*) FROM client GROUP BY date(created_at)";
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                chart.put(resultSet.getDate("creation").toString(),
+                        resultSet.getInt("COUNT(*)"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return chart;
+    }
+
+    }
+
 
 

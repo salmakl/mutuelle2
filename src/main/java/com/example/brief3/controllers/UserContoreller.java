@@ -1,6 +1,7 @@
 package com.example.brief3.controllers;
 
 import com.example.brief3.DAO.Client;
+import com.example.brief3.Mutuelle;
 import com.example.brief3.models.Clients;
 import com.example.brief3.models.Users;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -108,6 +110,11 @@ public class UserContoreller implements Initializable {
     private Button searchBtn;
 
     @FXML
+    private TextField work_badge;
+    @FXML
+    private Label badge;
+
+    @FXML
     private ComboBox<String> companyF;
 
 
@@ -131,8 +138,7 @@ public class UserContoreller implements Initializable {
         Matcher mc = c.matcher(this.idC.getText());
         Matcher mps = ps.matcher(this.idC.getText());
 
-        RadioButton selectedRadioButton = (RadioButton) identifiant.getSelectedToggle();
-        String toogleGroupValue = selectedRadioButton.getText();
+
 
         boolean error = false;
 
@@ -206,6 +212,13 @@ public class UserContoreller implements Initializable {
             this.eAddress.setText("");
             client.setAddress(this.adress.getText());
         }
+        if (this.work_badge.getText().isEmpty() || this.work_badge.getLength() < 10 && this.work_badge.getLength() > 10) {
+            this.badge.setText("Should countain 10 digit or characters");
+            error = true;
+        } else {
+            this.badge.setText("");
+            client.setBadge(this.work_badge.getText());
+        }
 
         if (this.date.getValue() == null) {
             this.eDate.setText("Should not be empty");
@@ -220,23 +233,6 @@ public class UserContoreller implements Initializable {
 
         }
 
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("C:\\Users\\admin\\Desktop\\Brief3\\src\\main\\resources\\com\\example\\brief3\\json\\ref.json")) {
-            //Read JSON file
-            Object obj = parser.parse(reader);
-
-            JSONArray list = (JSONArray) obj;
-
-            for (Object o : list) {
-                JSONObject country_obj = (JSONObject) o;
-                String country_code = (String) country_obj.get("dial_code");
-
-                country.getItems().add(country_code);
-            }
-
-        }catch(Exception e1) {
-        e1.printStackTrace();
-    }
 
 }
 
@@ -251,7 +247,26 @@ public class UserContoreller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Client client = new Client();
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("C:\\Users\\admin\\Desktop\\mutuelle2\\src\\main\\resources\\com\\example\\brief3\\json\\ref.json")) {
+            //Read JSON file
+            Object obj = parser.parse(reader);
+
+            JSONArray list = (JSONArray) obj;
+
+            for (Object object : list) {
+                JSONObject country_obj = (JSONObject) object;
+                String country_code = (String) country_obj.get("dial_code");
+
+                country.getItems().add(country_code);
+            }
+
+        }catch(Exception e1) {
+            e1.printStackTrace();
+        }
+
         companyF.setItems(client.getCompany());
+
 
         cId.setCellValueFactory(new PropertyValueFactory<Clients, String>("id"));
         comp.setCellValueFactory(new PropertyValueFactory<Clients, String>("company"));
@@ -276,6 +291,10 @@ public class UserContoreller implements Initializable {
         table.getItems().clear();
         table.setItems(client.getClientsByCompany(companyF.getValue()));
 
+    }
+    public void toChart() throws IOException {
+        Mutuelle m=new Mutuelle();
+        m.chaneScene("statistics.fxml");
     }
 
 }

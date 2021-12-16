@@ -28,7 +28,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="426.0" prefWidth="721.0" style="-fx-background-color: pink;">
                            <children>
-                              <Pane layoutX="102.0" layoutY="47.0" prefHeight="470.0" prefWidth="607.0" style="-fx-background-color: white; -fx-background-radius: 10px;">
+                              <Pane layoutX="102.0" layoutY="50.0" prefHeight="470.0" prefWidth="607.0" style="-fx-background-color: white; -fx-background-radius: 10px;">
                                  <children>
                                     <TextField fx:id="fname" layoutX="71.0" layoutY="82.0" prefHeight="28.0" prefWidth="167.0" promptText="First name" />
                                     <TextField fx:id="company" layoutX="71.0" layoutY="162.0" prefHeight="28.0" prefWidth="167.0" promptText="Company name" />
@@ -48,7 +48,7 @@
                                     <TextField fx:id="phone" layoutX="395.0" layoutY="250.0" prefHeight="19.0" prefWidth="128.0" promptText="phone" />
                                     <TextArea fx:id="adress" layoutX="64.0" layoutY="305.0" prefHeight="88.0" prefWidth="175.0" promptText="Adress" />
                                     <TextField fx:id="mail" layoutX="347.0" layoutY="305.0" prefHeight="25.0" prefWidth="178.0" promptText="E-mail" />
-                                    <Button fx:id="add" layoutX="396.0" layoutY="357.0" mnemonicParsing="false" onAction="#save" prefHeight="36.0" prefWidth="80.0" style="-fx-background-color: #ff8080;" text="Add" textFill="WHITE" />
+                                    <Button fx:id="add" layoutX="247.0" layoutY="411.0" mnemonicParsing="false" onAction="#save" prefHeight="36.0" prefWidth="80.0" style="-fx-background-color: #ff8080;" text="Add" textFill="WHITE" />
                                     <Label fx:id="eFname" layoutX="71.0" layoutY="119.0" textFill="#df1818" />
                                     <Label fx:id="eCompany" layoutX="71.0" layoutY="201.0" textFill="#dc2525" />
                                     <Label fx:id="eLname" layoutX="347.0" layoutY="121.0" textFill="#df1818" />
@@ -58,6 +58,8 @@
                                     <Label fx:id="eAddress" layoutX="67.0" layoutY="402.0" textFill="#df1818" />
                                     <Label fx:id="eEmail" layoutX="347.0" layoutY="341.0" textFill="#df1818" />
                                     <ChoiceBox fx:id="country" layoutX="346.0" layoutY="250.0" prefHeight="25.0" prefWidth="49.0" />
+                                    <TextField fx:id="work_badge" layoutX="347.0" layoutY="358.0" prefHeight="25.0" prefWidth="178.0" promptText="Work Badge" />
+                                    <Label fx:id="badge" layoutX="347.0" layoutY="394.0" textFill="#fc2d2d" />
                                  </children>
                               </Pane>
                            </children></AnchorPane>
@@ -82,6 +84,7 @@
                               <TextField fx:id="search" layoutX="250.0" layoutY="61.0" prefHeight="26.0" prefWidth="301.0" promptText="Search" />
                               <Button fx:id="searchBtn" layoutX="571.0" layoutY="62.0" mnemonicParsing="false" onAction="#search" prefHeight="23.0" prefWidth="62.0" text="ok" />
                               <ComboBox fx:id="companyF" layoutX="54.0" layoutY="61.0" onAction="#searchByCompany" prefWidth="150.0" />
+                              <Button fx:id="chart" layoutX="725.0" layoutY="61.0" mnemonicParsing="false" onAction="#toChart" text="Go Chart" />
                            </children>
                         </AnchorPane>
                      </content></Tab>
