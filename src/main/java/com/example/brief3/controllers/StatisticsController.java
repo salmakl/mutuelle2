@@ -1,6 +1,7 @@
 package com.example.brief3.controllers;
 
 import com.example.brief3.DAO.Client;
+import com.example.brief3.Mutuelle;
 import com.example.brief3.models.Clients;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,6 +9,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,5 +29,10 @@ public class StatisticsController implements Initializable {
             series.getData().add(new XYChart.Data<String, Number>(key, chart.get(key)));
         }
         lineChart.getData().add(series);
+    }
+
+    public void back() throws IOException {
+        Mutuelle m=new Mutuelle();
+        m.chaneScene("dashboard.fxml");
     }
 }
