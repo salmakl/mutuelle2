@@ -39,20 +39,6 @@ public class Clients {
 
 
 
-/*    public Clients(int id, String badge, String fname, String lname, String cin, String passport, String phone, String email, String address, Date created_at, Date date, String company) {
-        this.id = id;
-        this.badge = badge;
-        this.fname = fname;
-        this.lname = lname;
-        this.cin = cin;
-        this.passport = passport;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.created_at = created_at;
-        this.date = date;
-        this.company = company;
-    }*/
 
     public int getId() {
         return id;

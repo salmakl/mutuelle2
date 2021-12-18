@@ -1,5 +1,6 @@
 package com.example.brief3.controllers;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.example.brief3.DAO.ConnectionClass;
 import com.example.brief3.DAO.Users;
 import com.example.brief3.Mutuelle;
@@ -12,6 +13,8 @@ import java.io.IOException;
 
 public class LoginController{
 
+
+
     public LoginController() {
     }
     @FXML
@@ -23,12 +26,24 @@ public class LoginController{
     @FXML
     private Label wrong;
 
+    public void crypt(){
+        String password = "5B2yubZU";
+
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+        // $2a$12$US00g/uMhoSBm.HiuieBjeMtoN69SN.GE25fCpldebzkryUyopws6
+
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
+        // result.verified == true
+        System.out.println(bcryptHashString);
+    }
 
     public void checkLogin() throws IOException {
 
         Mutuelle main = new Mutuelle();
         String email = this.email.getText();
         String password = this.password.getText();
+        crypt();
+
         try {
 
             ConnectionClass connectionClass = new ConnectionClass();
