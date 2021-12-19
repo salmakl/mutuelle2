@@ -67,6 +67,7 @@ public class Client {
         }
     }
 
+
     //search client
 
     public ObservableList<Clients> search(String search) {

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 
 public class LoginController{
-
+    Users users = new Users();
 
 
     public LoginController() {
@@ -26,15 +26,20 @@ public class LoginController{
     @FXML
     private Label wrong;
 
-    public void crypt(){
-        String password = "5B2yubZU";
+    public boolean decryption(String password,String email) {
+            //String password = "5B2yubZU";
+        try {
+            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), users.getPassword(email));
+            // result.verified == true
+            System.out.println(result);
+            return result.verified;
 
-        String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
-        // $2a$12$US00g/uMhoSBm.HiuieBjeMtoN69SN.GE25fCpldebzkryUyopws6
+        }catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
-        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), bcryptHashString);
-        // result.verified == true
-        System.out.println(bcryptHashString);
+
     }
 
     public void checkLogin() throws IOException {
@@ -42,21 +47,24 @@ public class LoginController{
         Mutuelle main = new Mutuelle();
         String email = this.email.getText();
         String password = this.password.getText();
-        crypt();
+
+
 
         try {
 
             ConnectionClass connectionClass = new ConnectionClass();
             connectionClass.getConnection();
 
-            Users users = new Users();
+
 
 
             if (email.isEmpty() || password.isEmpty()) {
                 wrong.setText("Please fill in all fields");
             }
-            else if (users.Login(email, password)) {
+            else if (decryption(password,email)) {
+                System.out.println(decryption(password,email));
                 main.chaneScene("dashboard.fxml");
+
             }
             else {
                 wrong.setText("Wrong email or password");
